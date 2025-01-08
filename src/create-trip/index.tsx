@@ -142,7 +142,7 @@ function CreateTrip() {
         </div>
 
         <div className="flex justify-end py-10">
-          <Button className="text-white bg-black rounded-xl hover:text-black hover:bg-white font-bold">Genrate Trip</Button>
+          <Button className="text-white bg-black hover:text-black hover:bg-white font-bold rounded-[5px]">Genrate Trip</Button>
         </div>
 
       </div>
