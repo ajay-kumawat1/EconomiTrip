@@ -16,10 +16,11 @@ function Hero() {
       </p>
 
       <Link to={"/create-trip"}>
-        <Button>Get Started, It's Free</Button>
+        <Button className="text-white bg-black rounded-xl hover:text-black hover:bg-white font-bold">Get Started, It's Free</Button>
       </Link>
     </div>
   );
 }
 
 export default Hero;
+  
