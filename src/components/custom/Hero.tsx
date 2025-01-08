@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { Button } from "../ui/button";
 import { places } from "../../constants/options";
 
 function Hero() {
@@ -13,14 +12,17 @@ function Hero() {
       </h1>
       <p className="text-xl text-center text-gray-500">
         From dream destinations to custom-crafted experiences, we design travel
-        that matches your style. <br /> Your next adventure starts here with tailored
-        itineraries!
+        that matches your style. <br /> Your next adventure starts here with
+        tailored itineraries!
       </p>
 
       <Link to={"/create-trip"} className="mt-10">
-        <Button className="text-white bg-black hover:text-black hover:bg-white font-bold rounded-[5px] transition-all duration-900 ease-in-out">
+        <button
+          type="button"
+          className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-[5px] text-sm px-5 py-2.5 text-center me-2 mb-2"
+        >
           Get Started
-        </Button>
+        </button>
       </Link>
 
       <div>

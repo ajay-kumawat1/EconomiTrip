@@ -1,10 +1,11 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import CreateTrip from './create-trip/index.tsx'
-import Header from './components/custom/Header.tsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App.tsx";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import CreateTrip from "./create-trip/index.tsx";
+import Header from "./components/custom/Header.tsx";
+import Footer from "./components/custom/Footer.tsx";
 
 const router = createBrowserRouter([
   {
@@ -14,12 +15,13 @@ const router = createBrowserRouter([
   {
     path: "/create-trip",
     element: <CreateTrip />,
-  }
-])
+  },
+]);
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Header />
     <RouterProvider router={router} />
-  </StrictMode>,
-)
+    <Footer />
+  </StrictMode>
+);
