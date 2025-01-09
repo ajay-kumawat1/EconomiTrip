@@ -3,16 +3,13 @@ import Autosuggest from "react-autosuggest";
 import axios from "axios";
 import { Input } from "../components/ui/input";
 import { SelectBudgetOptions, SelectTravelesList } from "../constants/options";
-import { Button } from "../components/ui/button";
 
 function CreateTrip() {
   const [place, setPlace] = useState("");
   const [suggestionsList, setSuggestionsList] = useState<Place[]>([]);
 
-  // Fetch suggestions from OpenStreetMap Nominatim API
   interface Place {
     display_name: string;
-    // Add other relevant fields if needed
   }
 
   const fetchPlaces = async (query: string): Promise<void> => {
@@ -51,30 +48,27 @@ function CreateTrip() {
     onChange,
   };
 
-  interface Suggestion {
-    display_name: string;
-  }
-
-  const renderSuggestion = (suggestion: Suggestion) => {
+  const renderSuggestion = (suggestion: Place) => {
     return <div>{suggestion.display_name}</div>;
   };
 
   return (
     <div className="px-5 sm:px-10 md:px-20 lg:px-32 xl:px-56 mt-10">
-      <h2 className="font-bold text-2xl sm:text-3xl">
-        Tell us your travel preferences 🏕️🌴
-      </h2>
-      <p className="mt-3 text-gray-500 text-lg sm:text-xl">
-        Just provide some basic information, and our trip planner will generate
-        a customized itinerary based on your preferences.
+      <h1 className="font-extrabold text-[#f56551] text-center text-[36px] md:text-[40px]">
+        Dream Big, Spend Small with AI Travel Plans 🗺️💸
+      </h1>
+      <p className="mt-3 text-gray-500 text-center text-[17px]">
+        Tell us what you love, and let our planner create an unforgettable trip.
+        It’s time to explore in style!
       </p>
 
       <div className="mt-10 flex flex-col gap-10">
         {/* Destination */}
-        <div>
+        <div className="relative">
           <h2 className="text-lg sm:text-xl my-3 font-medium">
             What is your destination of choice?
           </h2>
+
           <Autosuggest
             suggestions={suggestionsList}
             onSuggestionsFetchRequested={onSuggestionsFetchRequested}
@@ -86,7 +80,7 @@ function CreateTrip() {
               input:
                 "flex h-10 w-full shadow-md border border-gray-300 px-3 py-2 transition-colors placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-500 md:text-sm rounded",
               suggestionsContainerOpen:
-                "border border-gray-300 rounded-md shadow-lg mt-1 max-h-60 overflow-y-auto bg-white",
+                "absolute top-full left-0 right-0 border border-gray-300 rounded-md shadow-lg mt-1 max-h-60 overflow-y-auto bg-white z-10",
               suggestion: "p-2 text-sm text-gray-500 hover:bg-gray-200",
               suggestionHighlighted: "bg-gray-100",
             }}
@@ -145,9 +139,12 @@ function CreateTrip() {
 
         {/* Generate Trip Button */}
         <div className="flex justify-center sm:justify-end py-10">
-          <Button className="text-white bg-black hover:text-black hover:bg-white font-bold rounded-md transition duration-300">
-            Generate Trip
-          </Button>
+          <button
+            type="button"
+            className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-[5px] text-sm px-5 py-2.5 text-center"
+          >
+            Genrate Trip
+          </button>
         </div>
       </div>
     </div>
