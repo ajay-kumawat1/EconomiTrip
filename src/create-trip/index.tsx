@@ -30,17 +30,14 @@ function CreateTrip() {
     }
   };
 
-  // Handle when suggestions are fetched
   const onSuggestionsFetchRequested = ({ value }: { value: string }) => {
     fetchPlaces(value);
   };
 
-  // Handle clearing the suggestions
   const onSuggestionsClearRequested = () => {
     setSuggestionsList([]);
   };
 
-  // Handle input change
   const onChange = (
     _event: React.FormEvent<HTMLElement>,
     { newValue }: { newValue: string }
@@ -48,14 +45,12 @@ function CreateTrip() {
     setPlace(newValue);
   };
 
-  // Define input props for Autosuggest component
   const inputProps = {
     placeholder: "Search a place for your trip",
     value: place,
     onChange,
   };
 
-  // Render each suggestion in the list
   interface Suggestion {
     display_name: string;
   }
@@ -65,86 +60,95 @@ function CreateTrip() {
   };
 
   return (
-    <div className="sm:px-10 md:px-32 lg:px-56 xl:px-72 px-5 mt-10">
-      <h2 className="font-bold text-3xl">
+    <div className="px-5 sm:px-10 md:px-20 lg:px-32 xl:px-56 mt-10">
+      <h2 className="font-bold text-2xl sm:text-3xl">
         Tell us your travel preferences 🏕️🌴
       </h2>
-      <p className="mt-3 text-gray-500 text-xl">
+      <p className="mt-3 text-gray-500 text-lg sm:text-xl">
         Just provide some basic information, and our trip planner will generate
         a customized itinerary based on your preferences.
       </p>
 
-      <div className="mt-20 flex flex-col gap-10">
+      <div className="mt-10 flex flex-col gap-10">
+        {/* Destination */}
         <div>
-          <h2 className="text-xl my-3 font-medium">
-            What is your destination of choice ?
+          <h2 className="text-lg sm:text-xl my-3 font-medium">
+            What is your destination of choice?
           </h2>
-
           <Autosuggest
             suggestions={suggestionsList}
             onSuggestionsFetchRequested={onSuggestionsFetchRequested}
             onSuggestionsClearRequested={onSuggestionsClearRequested}
-            getSuggestionValue={(suggestion) => suggestion.display_name} // Use display_name for showing full address
+            getSuggestionValue={(suggestion) => suggestion.display_name}
             renderSuggestion={renderSuggestion}
             inputProps={inputProps}
             theme={{
               input:
-                "flex h-9 w-full shadow-md border border-gray-300 px-3 py-1 transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+                "flex h-10 w-full shadow-md border border-gray-300 px-3 py-2 transition-colors placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-500 md:text-sm rounded",
               suggestionsContainerOpen:
                 "border border-gray-300 rounded-md shadow-lg mt-1 max-h-60 overflow-y-auto bg-white",
               suggestion: "p-2 text-sm text-gray-500 hover:bg-gray-200",
-              suggestionHighlighted: "bg-blue-100",
+              suggestionHighlighted: "bg-gray-100",
             }}
           />
         </div>
 
+        {/* Trip Duration */}
         <div>
-          <h2 className="text-xl my-3 font-medium">
-            How many days are you planning your trip ?
+          <h2 className="text-lg sm:text-xl my-3 font-medium">
+            How many days are you planning your trip?
           </h2>
           <Input
-            className="shadow-md border border-gray-300"
-            placeholder={"Ex. 3"}
+            className="shadow-md border border-gray-300 w-full px-3 py-2 rounded"
+            placeholder="Ex. 3"
             type="number"
           />
         </div>
 
+        {/* Budget Options */}
         <div>
-          <h2 className="text-xl my-3 font-medium">What is Your Budget?</h2>
-          <div className="grid grid-cols-3 gap-5 mt-5">
+          <h2 className="text-lg sm:text-xl my-3 font-medium">
+            What is your budget?
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
             {SelectBudgetOptions.map((item, index) => (
               <div
                 key={index}
-                className="p-4 border cursor-pointer rounded-2xl hover:shadow-lg"
+                className="p-4 border cursor-pointer rounded-2xl hover:shadow-lg transition duration-300"
               >
-                <h2 className="text-4xl">{item.icon}</h2>
-                <h2 className="font-bold text-lg">{item.title}</h2>
+                <h2 className="text-3xl sm:text-4xl">{item.icon}</h2>
+                <h2 className="font-bold text-md sm:text-lg">{item.title}</h2>
                 <h2 className="text-sm text-gray-500">{item.desc}</h2>
               </div>
             ))}
           </div>
         </div>
 
+        {/* Travel Companions */}
         <div>
-          <h2 className="text-xl my-3 font-medium">Who do you plan on traveling with on your next adventure?</h2>
-          <div className="grid grid-cols-3 gap-5 mt-5">
+          <h2 className="text-lg sm:text-xl my-3 font-medium">
+            Who do you plan on traveling with?
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
             {SelectTravelesList.map((item, index) => (
               <div
                 key={index}
-                className="p-4 border cursor-pointer rounded-2xl hover:shadow-lg"
+                className="p-4 border cursor-pointer rounded-2xl hover:shadow-lg transition duration-300"
               >
-                <h2 className="text-4xl">{item.icon}</h2>
-                <h2 className="font-bold text-lg">{item.title}</h2>
+                <h2 className="text-3xl sm:text-4xl">{item.icon}</h2>
+                <h2 className="font-bold text-md sm:text-lg">{item.title}</h2>
                 <h2 className="text-sm text-gray-500">{item.desc}</h2>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="flex justify-end py-10">
-          <Button className="text-white bg-black hover:text-black hover:bg-white font-bold rounded-[5px]">Genrate Trip</Button>
+        {/* Generate Trip Button */}
+        <div className="flex justify-center sm:justify-end py-10">
+          <Button className="text-white bg-black hover:text-black hover:bg-white font-bold rounded-md transition duration-300">
+            Generate Trip
+          </Button>
         </div>
-
       </div>
     </div>
   );
