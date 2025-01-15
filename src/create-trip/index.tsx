@@ -2,8 +2,13 @@ import { useEffect, useState } from "react";
 import Autosuggest from "react-autosuggest";
 import axios from "axios";
 import { Input } from "../components/ui/input";
-import { SelectBudgetOptions, SelectTravelesList } from "../constants/options";
+import {
+  AI_PROMPT,
+  SelectBudgetOptions,
+  SelectTravelesList,
+} from "../constants/options";
 import { toast } from "sonner";
+import { chatSession } from "../service/AIModel";
 
 function CreateTrip() {
   const [place, setPlace] = useState("");
@@ -67,7 +72,7 @@ function CreateTrip() {
     onChange,
   };
 
-  const onGenerateTrip = () => {
+  const onGenerateTrip = async () => {
     if (
       (Number(formData?.Duration) > 5 && !formData?.Location) ||
       !formData?.Budget ||
@@ -76,7 +81,17 @@ function CreateTrip() {
       toast("Please fill all the fields");
       return;
     }
-    console.log("Generating Trip", formData);
+
+    const FINAL_PROMPT = AI_PROMPT.replace("{location}", formData?.Location)
+      .replace("{duration}", formData?.Duration)
+      .replace("{budget}", formData?.Budget)
+      .replace("{traveller}", formData?.Traveller)
+      .replace("{totalDays}", formData?.Duration);
+
+    console.log(FINAL_PROMPT);
+
+    const result = await chatSession.sendMessage(FINAL_PROMPT);
+    console.log(result?.response?.text());
   };
 
   const renderSuggestion = (suggestion: Place) => {
