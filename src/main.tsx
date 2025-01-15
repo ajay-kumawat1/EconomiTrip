@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import CreateTrip from "./create-trip/index.tsx";
 import Header from "./components/custom/Header.tsx";
 import Footer from "./components/custom/Footer.tsx";
+import { Toaster } from "./components/ui/sonner.tsx";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Header />
+    <Toaster />
     <RouterProvider router={router} />
     <Footer />
   </StrictMode>
