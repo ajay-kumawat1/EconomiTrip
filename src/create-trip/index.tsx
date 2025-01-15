@@ -1,12 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Autosuggest from "react-autosuggest";
 import axios from "axios";
 import { Input } from "../components/ui/input";
 import { SelectBudgetOptions, SelectTravelesList } from "../constants/options";
+import { toast } from "sonner";
 
 function CreateTrip() {
   const [place, setPlace] = useState("");
   const [suggestionsList, setSuggestionsList] = useState<Place[]>([]);
+
+  const [formData, setFormData] = useState<FormData>({});
+
+  interface FormData {
+    [key: string]: string;
+  }
+
+  const handleInputChange = (name: string, value: string) => {
+    setFormData(() => ({
+      ...formData,
+      [name]: value,
+    }));
+  };
+
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
 
   interface Place {
     display_name: string;
@@ -40,12 +58,25 @@ function CreateTrip() {
     { newValue }: { newValue: string }
   ) => {
     setPlace(newValue);
+    handleInputChange("Location", newValue);
   };
 
   const inputProps = {
     placeholder: "Search a place for your trip",
     value: place,
     onChange,
+  };
+
+  const onGenerateTrip = () => {
+    if (
+      (Number(formData?.Duration) > 5 && !formData?.Location) ||
+      !formData?.Budget ||
+      !formData?.Traveller
+    ) {
+      toast("Please fill all the fields");
+      return;
+    }
+    console.log("Generating Trip", formData);
   };
 
   const renderSuggestion = (suggestion: Place) => {
@@ -96,6 +127,7 @@ function CreateTrip() {
             className="shadow-md border border-gray-300 w-full px-3 py-2 rounded"
             placeholder="Ex. 3"
             type="number"
+            onChange={(e) => handleInputChange("Duration", e.target.value)}
           />
         </div>
 
@@ -108,7 +140,14 @@ function CreateTrip() {
             {SelectBudgetOptions.map((item, index) => (
               <div
                 key={index}
-                className="p-4 border cursor-pointer rounded-2xl hover:shadow-lg transition duration-300"
+                onClick={() => handleInputChange("Budget", item.title)}
+                className={`p-4 border cursor-pointer rounded-2xl hover:shadow-lg transition duration-300
+                  ${
+                    formData?.Budget === item.title
+                      ? "bg-blue-100 shadow-lg"
+                      : ""
+                  }  
+                `}
               >
                 <h2 className="text-3xl sm:text-4xl">{item.icon}</h2>
                 <h2 className="font-bold text-md sm:text-lg">{item.title}</h2>
@@ -127,7 +166,14 @@ function CreateTrip() {
             {SelectTravelesList.map((item, index) => (
               <div
                 key={index}
-                className="p-4 border cursor-pointer rounded-2xl hover:shadow-lg transition duration-300"
+                onClick={() => handleInputChange("Traveller", item.people)}
+                className={`p-4 border cursor-pointer rounded-2xl hover:shadow-lg transition duration-300
+                  ${
+                    formData?.Traveller === item.people
+                      ? "bg-blue-100 shadow-lg"
+                      : ""
+                  }  
+                `}
               >
                 <h2 className="text-3xl sm:text-4xl">{item.icon}</h2>
                 <h2 className="font-bold text-md sm:text-lg">{item.title}</h2>
@@ -142,6 +188,7 @@ function CreateTrip() {
           <button
             type="button"
             className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-[5px] text-sm px-5 py-2.5 text-center"
+            onClick={onGenerateTrip}
           >
             Genrate Trip
           </button>
